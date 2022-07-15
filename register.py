@@ -19,7 +19,7 @@ def register_fun():
     then if true he will be able to register new username to the system"""
     register = Tk()
     register.title("Register")
-    register.geometry("380x400")
+    register.geometry("340x380")
 
 
     def add():
@@ -92,9 +92,6 @@ def register_fun():
     # Create add button
     add_button = Button(register,text="Add",font=("Arial",12),command=add)
     add_button.grid(row = 6,column =1,pady=(20,0),padx=(5,0))
-
-
-    register.mainloop()
 
 
 
