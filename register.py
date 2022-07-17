@@ -178,7 +178,7 @@ def register_fun():
     # Create entry boxes for username and passwosrd
     admin_box = Entry(register)
     admin_box.grid(row = 1,column =1,pady=(60,0),padx=(5,0))
-    admin_password_box = Entry(register)
+    admin_password_box = Entry(register,show="*")
     admin_password_box.grid(row = 2,column =1,pady=(20,0),padx=(5,0))
 
     # Add new user label
