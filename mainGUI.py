@@ -132,7 +132,7 @@ def main_gui():
     # Create entry boxes for username and passwosrd
     username_box = Entry(root)
     username_box.grid(row = 1,column =1,pady=(60,0),padx=(5,0))
-    password_box = Entry(root)
+    password_box = Entry(root,show="*")
     password_box.grid(row = 2,column =1,pady=(20,0),padx=(5,0))
 
     # Create login button
