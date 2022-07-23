@@ -21,43 +21,6 @@ def main_gui():
     # Create cursor object
     cursor = mydb.cursor()
 
-    # Create database
-    cursor.execute("CREATE DATABASE IF NOT EXISTS cms")
-
-    """
-    # Check if database was created
-    cursor.execute("SHOW DATABASES")
-    for db in cursor:
-        print(db)
-    """
-
-    # Create users table which will have the usernames and passwords saved
-    cursor.execute("CREATE TABLE IF NOT EXISTS users (user_id INT AUTO_INCREMENT PRIMARY KEY,\
-                                                      username VARCHAR(20),\
-                                                      password VARCHAR(20))")
-
-    """
-    # Check if table was created
-    cursor.execute("SELECT * FROM users")
-    for column in cursor.description:
-        print(column)
-    """
-
-    """
-    # Insert into table users admin record to control who register
-    sql_command = "INSERT INTO users (username,password) VALUES (%s,%s)"
-    values = ("JassemShe","JissShe")
-    cursor.execute(sql_command,values)
-    mydb.commit()
-    """
-
-    """
-    # Show records in users table
-    cursor.execute("SELECT * FROM users")
-    result = cursor.fetchall()
-    for record in result:
-        print(record)
-    """
 
     def login_fun():
         """This function will open a new window if the username and password are valid.

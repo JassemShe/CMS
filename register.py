@@ -67,9 +67,33 @@ def register_fun():
         a new window to deploy system to the cafe current status."""
 
         def reset():
+           """To reset items , tea and coffe table to zero"""
            response = messagebox.askquestion(title = "Reset" ,message="Delete and reset all records?")
            if response == 1:
             pass
+
+        def add_items():
+           """Add selected item quantity to items table"""
+           selected = item_drop.get().replace(".","_")
+           print(selected)
+
+        def add_tea():
+           """Add selected tea quantity to tea table"""
+           selected = tea_drop.get().replace(".","_")
+           print(selected)
+
+        def add_coffe():
+           """Add selected coffe quantity to coffe table"""
+           selected = coffe_drop.get().replace(".","_")
+           print(selected)
+
+        def add_cash():
+           """Save current cash ammout"""
+           global current_cash
+           try:
+            current_cash = int(cash_box.get())
+           except:
+            messagebox.showerror(title="Warning",message="Enter cash as numbers")
 
 
         # Get values from boxes
@@ -99,7 +123,7 @@ def register_fun():
             item_quantity_box.grid(row = 1, column = 1 , pady = (0,0), padx =(10,5))
 
             # Create add item button
-            add_item_button = Button(deploy,text = "Add items",font=("Arial",10))
+            add_item_button = Button(deploy,text = "Add items",font=("Arial",10),command=add_items)
             add_item_button.grid(row = 1 , column = 2 , pady = (0,0), padx = (10 ,5))
 
             """tea cup"""
@@ -118,7 +142,7 @@ def register_fun():
             tea_quantity_box.grid(row = 3, column = 1 , pady = (0,0), padx =(10,5))
 
             # Create add tea button
-            add_tea_button = Button(deploy,text = "Add tea cups",font=("Arial",10))
+            add_tea_button = Button(deploy,text = "Add tea cups",font=("Arial",10),command=add_tea)
             add_tea_button.grid(row = 3 , column = 2 , pady = (0,0), padx = (10 ,5))
 
             """coffe cup"""
@@ -137,7 +161,7 @@ def register_fun():
             coffe_quantity_box.grid(row = 5, column = 1 , pady = (0,0), padx =(10,5))
 
             # Create add tea button
-            add_coffe_button = Button(deploy,text = "Add coffe cups",font=("Arial",10))
+            add_coffe_button = Button(deploy,text = "Add coffe cups",font=("Arial",10),command = add_coffe)
             add_coffe_button.grid(row = 5 , column = 2 , pady = (0,0), padx = (10 ,5))
 
             """Cash"""
@@ -147,7 +171,7 @@ def register_fun():
             cash_box = Entry(deploy,width = 10)
             cash_box.grid(row = 6, column = 1 , pady = (50,0),padx=(0,0))
 
-            add_cash_button = Button(deploy,text = "Add cash",font=("Arial",10))
+            add_cash_button = Button(deploy,text = "Add cash",font=("Arial",10),command=add_cash)
             add_cash_button.grid(row = 6 , column = 2,padx = (0,0),pady=(50,0))
 
             # Create reset button
