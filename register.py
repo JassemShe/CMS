@@ -69,29 +69,55 @@ def register_fun():
         def reset():
            """To reset items , tea and coffe table to zero"""
            response = messagebox.askquestion(title = "Reset" ,message="Delete and reset all records?")
-           if response == 1:
-            pass
+           if response.lower() == 'yes':
+            cursor.execute("TRUNCATE TABLE items")
+            cursor.execute("TRUNCATE TABLE tea_cup")
+            cursor.execute("TRUNCATE TABLE coffe_cup")
+
+            # Insert 0 value to tables so id be created to update on it later the amount get added
+            cursor.execute("INSERT INTO items (0_50) VALUES (0)")
+            cursor.execute("INSERT INTO tea_cup (0_50) VALUES (0)")
+            cursor.execute("INSERT INTO coffe_cup (0_50) VALUES (0)")
+            mydb.commit()
 
         def add_items():
            """Add selected item quantity to items table"""
            selected = item_drop.get().replace(".","_")
-           print(selected)
+           try: # Make sure valid integer value entred
+            amount = int(item_quantity_box.get())
+            cursor.execute(f"UPDATE items SET {selected} = {amount} WHERE item_id = 1")
+            mydb.commit()
+            item_quantity_box.delete(0,END)
+           except:
+            messagebox.showerror(title="Warning",message="Enter amout as numbers")
 
         def add_tea():
            """Add selected tea quantity to tea table"""
            selected = tea_drop.get().replace(".","_")
-           print(selected)
+           try: # Make sure valid integer value entred
+            amount = int(tea_quantity_box.get())
+            cursor.execute(f"UPDATE tea_cup SET {selected} = {amount} WHERE tea_id = 1")
+            mydb.commit()
+            tea_quantity_box.delete(0,END)
+           except:
+            messagebox.showerror(title="Warning",message="Enter amout as numbers")
 
         def add_coffe():
            """Add selected coffe quantity to coffe table"""
            selected = coffe_drop.get().replace(".","_")
-           print(selected)
+           try: # Make sure valid integer value entred
+            amount = int(coffe_quantity_box.get())
+            cursor.execute(f"UPDATE coffe_cup SET {selected} = {amount} WHERE coffe_id = 1")
+            mydb.commit()
+            coffe_quantity_box.delete(0,END)
+           except:
+            messagebox.showerror(title="Warning",message="Enter amout as numbers")
 
         def add_cash():
            """Save current cash ammout"""
            global current_cash
            try:
-            current_cash = int(cash_box.get())
+            current_cash = float(cash_box.get())
            except:
             messagebox.showerror(title="Warning",message="Enter cash as numbers")
 
@@ -178,18 +204,8 @@ def register_fun():
             reset_button = Button(deploy, text = "Reset all",font = ("Arial",12),command = reset)
             reset_button.grid(row = 7 , column = 0, pady = (50,0),sticky = W+S)
 
-
-
-
         else:
             messagebox.showerror(title="Warning",message="Wrong Admin name or password")
-
-
-
-
-
-
-
 
 
     # Cafe name title label
