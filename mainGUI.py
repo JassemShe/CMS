@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 import mysql.connector
 
 
@@ -32,6 +33,85 @@ def main_gui():
         login.title("Option menu")
         login.geometry("320x340")
 
+        def store():
+            """This function will open store window to add items"""
+            store = Tk()
+            store.title("Store")
+            store.geometry("340x380")
+
+            def add_cash():
+                """Add cash to current cash"""
+                from register import current_cash
+                new_cash = float(cash_box.get())
+                current_cash = current_cash + new_cash
+                print(current_cash)
+
+            # Add items
+            items_label = Label(store,text = "Items",font=("Arial",12))
+            items_label.grid(row = 0 , column = 0 ,pady = (10,0),padx = (0,5),sticky=W)
+
+            items_list = ["0.05","0.10","0.15","0.20","0.25","0.30","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.75","0.80","0.85",\
+                          "0.90","0.95","1.00"]
+            item_drop = ttk.Combobox(store,values = items_list,state="readonly")
+            item_drop.current(0)
+            item_drop.grid(row = 1, column = 0 , pady = (0,0))
+
+            item_quantity_label = Label(store,text = "Q",font=("Arial",12))
+            item_quantity_label.grid(row = 0 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
+
+            item_quantity_box = Entry(store,width = 10)
+            item_quantity_box.grid(row = 1, column = 1 , pady = (0,0), padx =(10,5))
+
+            add_item_button = Button(store,text = "Add items",font=("Arial",10))
+            add_item_button.grid(row = 1 , column = 2 , pady = (0,0), padx = (10 ,5))
+
+            # Add tea cups
+            tea_cup_label = Label(store,text = "Tea cup price",font=("Arial",12))
+            tea_cup_label.grid(row = 2 , column = 0 ,pady = (20,0),padx = (0,5),sticky=W)
+
+            tea_list = ["0.25","0.30","0.35","0.40","0.45","0.50"]
+            tea_drop = ttk.Combobox(store,values = tea_list,state="readonly")
+            tea_drop.current(2)
+            tea_drop.grid(row = 3, column = 0 , pady = (0,0))
+
+            tea_quantity_label = Label(store,text = "Q",font=("Arial",12))
+            tea_quantity_label.grid(row = 2 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
+
+            tea_quantity_box = Entry(store,width = 10)
+            tea_quantity_box.grid(row = 3, column = 1 , pady = (0,0), padx =(10,5))
+
+            add_tea_button = Button(store,text = "Add tea cups",font=("Arial",10))
+            add_tea_button.grid(row = 3 , column = 2 , pady = (0,0), padx = (10 ,5))
+
+            # Add coffe cup
+            coffe_cup_label = Label(store,text = "Coffe cup price",font=("Arial",12))
+            coffe_cup_label.grid(row = 4 , column = 0 ,pady = (20,0),padx = (0,5),sticky=W)
+
+            coffe_list = ["0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.80","0.85","0.90","0.95","1.00"]
+            coffe_drop = ttk.Combobox(store,values = coffe_list,state="readonly")
+            coffe_drop.current(3)
+            coffe_drop.grid(row = 5, column = 0 , pady = (0,0))
+
+            coffe_quantity_label = Label(store,text = "Q",font=("Arial",12))
+            coffe_quantity_label.grid(row = 4 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
+
+            coffe_quantity_box = Entry(store,width = 10)
+            coffe_quantity_box.grid(row = 5, column = 1 , pady = (0,0), padx =(10,5))
+
+            add_coffe_button = Button(store,text = "Add coffe cups",font=("Arial",10))
+            add_coffe_button.grid(row = 5 , column = 2 , pady = (0,0), padx = (10 ,5))
+
+            # Add cash
+            cash_label = Label(store,text = "Cash",font=("Arial",12))
+            cash_label.grid(row = 6 , column = 0 ,pady = (50,0),padx = (0,0))
+
+            cash_box = Entry(store,width = 10)
+            cash_box.grid(row = 6, column = 1 , pady = (50,0),padx=(0,0))
+
+            add_cash_button = Button(store,text = "Add cash",font=("Arial",10),command=add_cash)
+            add_cash_button.grid(row = 6 , column = 2,padx = (0,0),pady=(50,0))
+
+
         def log_out():
             """This funtion will close login window and open mainGUI window"""
             login.destroy()
@@ -46,7 +126,7 @@ def main_gui():
         sales_button.grid(column = 1, row =1,pady=(60,10))
 
         # Create Store button
-        store_button = Button(login, text = "Store",font=("Arial",16),width=15)
+        store_button = Button(login, text = "Store",font=("Arial",16),width=15,command=store)
         store_button.grid(column = 1, row = 2,pady=(10,20))
 
         # Create log out button

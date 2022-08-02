@@ -118,9 +118,9 @@ def register_fun():
            global current_cash
            try:
             current_cash = float(cash_box.get())
+            cash_box.delete(0,END)
            except:
             messagebox.showerror(title="Warning",message="Enter cash as numbers")
-
 
         # Get values from boxes
         admin = admin_box.get()
