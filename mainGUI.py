@@ -39,6 +39,54 @@ def main_gui():
             store.title("Store")
             store.geometry("340x380")
 
+            def add_items():
+               """Add selected item quantity to items table"""
+               selected = item_drop.get().replace(".","_")
+               try: # Make sure valid integer value entred
+                amount = int(item_quantity_box.get())
+                cursor.execute(f"SELECT {selected} FROM items WHERE item_id = 1")
+                current_amount = cursor.fetchall()[0][0]
+                if current_amount == None:
+                    current_amount = 0
+                new_amount = current_amount + amount
+                cursor.execute(f"UPDATE items SET {selected} = {new_amount} WHERE item_id = 1")
+                mydb.commit()
+                item_quantity_box.delete(0,END)
+               except:
+                messagebox.showerror(title="Warning",message="Enter amout as numbers")
+
+            def add_tea():
+               """Add selected item quantity to items table"""
+               selected = tea_drop.get().replace(".","_")
+               try: # Make sure valid integer value entred
+                amount = int(tea_quantity_box.get())
+                cursor.execute(f"SELECT {selected} FROM tea_cup WHERE tea_id = 1")
+                current_amount = cursor.fetchall()[0][0]
+                if current_amount == None:
+                    current_amount = 0
+                new_amount = current_amount + amount
+                cursor.execute(f"UPDATE tea_cup SET {selected} = {new_amount} WHERE tea_id = 1")
+                mydb.commit()
+                tea_quantity_box.delete(0,END)
+               except:
+                messagebox.showerror(title="Warning",message="Enter amout as numbers")
+
+            def add_coffe():
+               """Add selected item quantity to items table"""
+               selected = coffe_drop.get().replace(".","_")
+               try: # Make sure valid integer value entred
+                amount = int(coffe_quantity_box.get())
+                cursor.execute(f"SELECT {selected} FROM coffe_cup WHERE coffe_id = 1")
+                current_amount = cursor.fetchall()[0][0]
+                if current_amount == None:
+                    current_amount = 0
+                new_amount = current_amount + amount
+                cursor.execute(f"UPDATE coffe_cup SET {selected} = {new_amount} WHERE coffe_id = 1")
+                mydb.commit()
+                coffe_quantity_box.delete(0,END)
+               except:
+                messagebox.showerror(title="Warning",message="Enter amout as numbers")
+
             def add_cash():
                 """Add cash to current cash"""
                 from register import current_cash
@@ -62,7 +110,7 @@ def main_gui():
             item_quantity_box = Entry(store,width = 10)
             item_quantity_box.grid(row = 1, column = 1 , pady = (0,0), padx =(10,5))
 
-            add_item_button = Button(store,text = "Add items",font=("Arial",10))
+            add_item_button = Button(store,text = "Add items",font=("Arial",10),command=add_items)
             add_item_button.grid(row = 1 , column = 2 , pady = (0,0), padx = (10 ,5))
 
             # Add tea cups
@@ -80,7 +128,7 @@ def main_gui():
             tea_quantity_box = Entry(store,width = 10)
             tea_quantity_box.grid(row = 3, column = 1 , pady = (0,0), padx =(10,5))
 
-            add_tea_button = Button(store,text = "Add tea cups",font=("Arial",10))
+            add_tea_button = Button(store,text = "Add tea cups",font=("Arial",10),command=add_tea)
             add_tea_button.grid(row = 3 , column = 2 , pady = (0,0), padx = (10 ,5))
 
             # Add coffe cup
@@ -98,7 +146,7 @@ def main_gui():
             coffe_quantity_box = Entry(store,width = 10)
             coffe_quantity_box.grid(row = 5, column = 1 , pady = (0,0), padx =(10,5))
 
-            add_coffe_button = Button(store,text = "Add coffe cups",font=("Arial",10))
+            add_coffe_button = Button(store,text = "Add coffe cups",font=("Arial",10),command=add_coffe)
             add_coffe_button.grid(row = 5 , column = 2 , pady = (0,0), padx = (10 ,5))
 
             # Add cash
