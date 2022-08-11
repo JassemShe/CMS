@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import mysql.connector
+import csv
 
 
 def main_gui():
@@ -89,10 +90,28 @@ def main_gui():
 
             def add_cash():
                 """Add cash to current cash"""
-                from register import current_cash
-                new_cash = float(cash_box.get())
-                current_cash = current_cash + new_cash
-                print(current_cash)
+                try:
+                    new_cash = float(cash_box.get())
+                    cursor.execute(f"SELECT current_cash FROM cash WHERE cash_id = 1")
+                    current_cash = cursor.fetchall()[0][0]
+                    if current_cash == None:
+                        current_cash = 0
+                    else:
+                        current_cash = float(current_cash) # Convert decimal to float
+                    current_cash = current_cash + new_cash
+                    cursor.execute(f"UPDATE cash SET current_cash = {current_cash} WHERE cash_id = 1")
+                    mydb.commit()
+                    cash_box.delete(0,END)
+                except:
+                    messagebox.showerror(title="Warning",message="Enter amout as numbers")
+
+
+            def export(result):
+                """This function will fetch data in store to a csv file"""
+                with open("store.csv","w",newline='') as f:
+                    writer = csv.writer(f,dialect = 'excel')
+                    for row in result:
+                      writer.writerow(row)
 
             # Add items
             items_label = Label(store,text = "Items",font=("Arial",12))
@@ -159,6 +178,12 @@ def main_gui():
             add_cash_button = Button(store,text = "Add cash",font=("Arial",10),command=add_cash)
             add_cash_button.grid(row = 6 , column = 2,padx = (0,0),pady=(50,0))
 
+            # Export button
+            cursor.execute("SELECT * FROM items")
+            result = cursor.fetchall()
+
+            export_button = Button(store,text = "Export",font=("Arial",10),command=lambda : export(result))
+            export_button.grid(row = 7 , column = 0,padx = (0,0),pady=(50,0),sticky = W)
 
         def log_out():
             """This funtion will close login window and open mainGUI window"""

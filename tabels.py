@@ -4,6 +4,17 @@ from tkinter import ttk
 import mysql.connector
 
 
+# Create a mysql instant and connect it (will add database later when create it)
+mydb = mysql.connector.connect(
+                      host = "127.0.0.1",
+                      user = "root",
+                      passwd = "jmjmaaskull",
+                      database = "cms")
+
+
+# Create cursor object
+cursor = mydb.cursor()
+
 
 # Create database
 cursor.execute("CREATE DATABASE IF NOT EXISTS cms")
@@ -105,11 +116,12 @@ cursor.execute("CREATE TABLE IF NOT EXISTS coffe_cup (coffe_id INT AUTO_INCREMEN
                                                       0_90 INTEGER,\
                                                       1_00 INTEGER)")
 
+# Create items table
+cursor.execute("CREATE TABLE IF NOT EXISTS cash (cash_id INT AUTO_INCREMENT PRIMARY KEY,current_cash DECIMAL(6,2))")
+
 """
 # Check if table was created
-cursor.execute("SELECT * FROM items,tea_cup,coffe_cup")
+cursor.execute("SELECT * FROM items,tea_cup,coffe_cup,cash")
 for column in cursor.description:
     print(column)
 """
-
-

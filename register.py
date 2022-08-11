@@ -114,10 +114,11 @@ def register_fun():
             messagebox.showerror(title="Warning",message="Enter amout as numbers")
 
         def add_cash():
-           """Save current cash ammout"""
-           global current_cash
+           """Add cash amount to cash table"""
            try:
             current_cash = float(cash_box.get())
+            cursor.execute(f"UPDATE cash SET current_cash = {current_cash} WHERE cash_id = 1")
+            mydb.commit()
             cash_box.delete(0,END)
            except:
             messagebox.showerror(title="Warning",message="Enter cash as numbers")
@@ -241,6 +242,3 @@ def register_fun():
     # Create fresh start button
     fresh_start_button = Button(register,text="Deploy system",font=("Arial",12),relief=RIDGE,command=deploy)
     fresh_start_button.grid(row = 7,column =1,pady=(5,0),padx=(5,0))
-
-
-
