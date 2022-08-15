@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import mysql.connector
-import csv
+import openpyxl
 
 
 def main_gui():
@@ -38,7 +38,7 @@ def main_gui():
             """This function will open store window to add items"""
             store = Tk()
             store.title("Store")
-            store.geometry("340x380")
+            store.geometry("340x400")
 
             def add_items():
                """Add selected item quantity to items table"""
@@ -105,13 +105,98 @@ def main_gui():
                 except:
                     messagebox.showerror(title="Warning",message="Enter amout as numbers")
 
+            def export():
+                """This function will fetch data in store to a xlsx file"""
+                data_to_export = export_drop.get()
 
-            def export(result):
-                """This function will fetch data in store to a csv file"""
-                with open("store.csv","w",newline='') as f:
-                    writer = csv.writer(f,dialect = 'excel')
-                    for row in result:
-                      writer.writerow(row)
+                # Save items database
+                if data_to_export == "Items":
+                    try:
+                        excel = openpyxl.Workbook()
+                        sheet = excel.active
+                        sheet.title = "Items"
+                        items_list = ["0.05","0.10","0.15","0.20","0.25","0.30","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.75","0.80","0.85",\
+                              "0.90","0.95","1.00"]
+                        sheet.append(items_list)
+
+                        cursor.execute("SELECT * FROM items")
+                        result = cursor.fetchall()
+                        record_list = []
+                        for record in result[0]:
+                            if record == None:
+                                record = 0
+                            record_list.append(record)
+                        sheet.append(record_list)
+                        excel.save("items.xlsx")
+                        messagebox.showinfo(title="Warning",message="Saved")
+                    except:
+                        messagebox.showerror(title="Warning",message="Something went wrong!")
+
+                # Save tea database
+                if data_to_export == "Tea":
+                    try:
+                        excel = openpyxl.Workbook()
+                        sheet = excel.active
+                        sheet.title = "Tea"
+                        tea_list = ["row","0.25","0.30","0.35","0.40","0.45","0.50"]
+                        sheet.append(tea_list)
+
+                        cursor.execute("SELECT * FROM tea_cup")
+                        result = cursor.fetchall()
+                        record_list = []
+                        for record in result[0]:
+                            if record == None:
+                                record = 0
+                            record_list.append(record)
+                        sheet.append(record_list)
+                        excel.save("tea.xlsx")
+                        messagebox.showinfo(title="Warning",message="Saved")
+                    except:
+                        messagebox.showerror(title="Warning",message="Something went wrong!")
+
+                # Save coffe database
+                if data_to_export == "Coffe":
+                    try:
+                        excel = openpyxl.Workbook()
+                        sheet = excel.active
+                        sheet.title = "Coffe"
+                        coffe_list = ["row","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.80","0.85","0.90","0.95","1.00"]
+                        sheet.append(coffe_list)
+
+                        cursor.execute("SELECT * FROM coffe_cup")
+                        result = cursor.fetchall()
+                        record_list = []
+                        for record in result[0]:
+                            if record == None:
+                                record = 0
+                            record_list.append(record)
+                        sheet.append(record_list)
+                        excel.save("coffe.xlsx")
+                        messagebox.showinfo(title="Warning",message="Saved")
+                    except:
+                        messagebox.showerror(title="Warning",message="Something went wrong!")
+
+                # Save cash database
+                if data_to_export == "Cash":
+                    try:
+                        excel = openpyxl.Workbook()
+                        sheet = excel.active
+                        sheet.title = "Cash"
+                        cash_list = ["row","Total Cash"]
+                        sheet.append(cash_list)
+
+                        cursor.execute("SELECT * FROM cash")
+                        result = cursor.fetchall()
+                        record_list = []
+                        for record in result[0]:
+                            if record == None:
+                                record = 0
+                            record_list.append(record)
+                        sheet.append(record_list)
+                        excel.save("cash.xlsx")
+                        messagebox.showinfo(title="Warning",message="Saved")
+                    except:
+                        messagebox.showerror(title="Warning",message="Something went wrong!")
 
             # Add items
             items_label = Label(store,text = "Items",font=("Arial",12))
@@ -179,11 +264,13 @@ def main_gui():
             add_cash_button.grid(row = 6 , column = 2,padx = (0,0),pady=(50,0))
 
             # Export button
-            cursor.execute("SELECT * FROM items")
-            result = cursor.fetchall()
+            export_list = ["Items","Tea","Coffe","Cash"]
+            export_drop = ttk.Combobox(store,values = export_list,state="readonly")
+            export_drop.grid(row = 7 , column = 0,padx = (0,0),pady=(50,0),sticky = W)
+            export_drop.current(0)
 
-            export_button = Button(store,text = "Export",font=("Arial",10),command=lambda : export(result))
-            export_button.grid(row = 7 , column = 0,padx = (0,0),pady=(50,0),sticky = W)
+            export_button = Button(store,text = "Export",font=("Arial",10),command=export)
+            export_button.grid(row = 8 , column = 0,padx = (0,0),pady=(5,0),sticky = W)
 
         def log_out():
             """This funtion will close login window and open mainGUI window"""
