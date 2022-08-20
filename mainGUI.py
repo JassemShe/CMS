@@ -34,6 +34,87 @@ def main_gui():
         login.title("Option menu")
         login.geometry("320x340")
 
+
+
+        def sales():
+            """This function will open sales window to apply sales operations"""
+            sales = Tk()
+            sales.title("Sales")
+            sales.geometry("420x400")
+
+            # Add items
+            items_label = Label(sales,text = "Items",font=("Arial",12))
+            items_label.grid(row = 0 , column = 0 ,pady = (10,0),padx = (0,5),sticky=W)
+            items_list = ["0.05","0.10","0.15","0.20","0.25","0.30","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.75","0.80","0.85",\
+                          "0.90","0.95","1.00"]
+            item_drop = ttk.Combobox(sales,values = items_list,state="readonly")
+            item_drop.current(0)
+            item_drop.grid(row = 1, column = 0 , pady = (0,0))
+            item_quantity_label = Label(sales,text = "Q",font=("Arial",12))
+            item_quantity_label.grid(row = 0 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
+            item_quantity_box = Entry(sales,width = 10)
+            item_quantity_box.grid(row = 1, column = 1 , pady = (0,0), padx =(10,5))
+            add_item_button = Button(sales,text = "Add",font=("Arial",10))
+            add_item_button.grid(row = 1 , column = 2 , pady = (0,0), padx = (10 ,5))
+            remove_item_button = Button(sales,text = "Remove",font=("Arial",10))
+            remove_item_button.grid(row = 1 , column = 3 , pady = (0,0), padx = (10 ,5))
+
+            # Add tea
+            tea_cup_label = Label(sales,text = "Tea cup price",font=("Arial",12))
+            tea_cup_label.grid(row = 2 , column = 0 ,pady = (20,0),padx = (0,5),sticky=W)
+            tea_list = ["0.25","0.30","0.35","0.40","0.45","0.50"]
+            tea_drop = ttk.Combobox(sales,values = tea_list,state="readonly")
+            tea_drop.current(2)
+            tea_drop.grid(row = 3, column = 0 , pady = (0,0))
+            tea_quantity_label = Label(sales,text = "Q",font=("Arial",12))
+            tea_quantity_label.grid(row = 2 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
+            tea_quantity_box = Entry(sales,width = 10)
+            tea_quantity_box.grid(row = 3, column = 1 , pady = (0,0), padx =(10,5))
+            add_tea_button = Button(sales,text = "Add",font=("Arial",10))
+            add_tea_button.grid(row = 3 , column = 2 , pady = (0,0), padx = (10 ,5))
+            remove_tea_button = Button(sales,text = "Remove",font=("Arial",10))
+            remove_tea_button.grid(row = 3 , column = 3 , pady = (0,0), padx = (10 ,5))
+
+            # Add coffe
+            coffe_cup_label = Label(sales,text = "Coffe cup price",font=("Arial",12))
+            coffe_cup_label.grid(row = 4 , column = 0 ,pady = (20,0),padx = (0,5),sticky=W)
+            coffe_list = ["0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.80","0.85","0.90","0.95","1.00"]
+            coffe_drop = ttk.Combobox(sales,values = coffe_list,state="readonly")
+            coffe_drop.current(3)
+            coffe_drop.grid(row = 5, column = 0 , pady = (0,0))
+            coffe_quantity_label = Label(sales,text = "Q",font=("Arial",12))
+            coffe_quantity_label.grid(row = 4 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
+            coffe_quantity_box = Entry(sales,width = 10)
+            coffe_quantity_box.grid(row = 5, column = 1 , pady = (0,0), padx =(10,5))
+            add_coffe_button = Button(sales,text = "Add",font=("Arial",10))
+            add_coffe_button.grid(row = 5 , column = 2 , pady = (0,0), padx = (10 ,5))
+            remove_coffe_button = Button(sales,text = "Remove",font=("Arial",10))
+            remove_coffe_button.grid(row = 5 , column = 3 , pady = (0,0), padx = (10 ,5))
+
+            # Total price
+            total_price_text_label = Label(sales,text="Total Price: ",font=("Arial",14))
+            total_price_text_label.grid(row = 6 , column = 0,pady=(40,0))
+            total_price_value_label = Label(sales,text="**",font=("Arial",14))
+            total_price_value_label.grid(row = 6 , column = 1,pady=(40,0))
+
+            # Paid
+            paid_label = Label(sales,text="Paid: ",font=("Arial",14))
+            paid_label.grid(row=7,column=0)
+            paid_box = Entry(sales,width = 10)
+            paid_box.grid(row = 7 , column =1)
+
+            # Remaining
+            remaining_text_label = Label(sales,text="Remaining: ",font=("Arial",14))
+            remaining_text_label.grid(row= 8, column = 0)
+            remaining_value_label = Label(sales,text="**",font=("Arial",14))
+            remaining_value_label.grid(row=8,column=1)
+
+            # Enter
+            enter_button = Button(sales,text="Enter",font=("Arial",10),width = 15)
+            enter_button.grid(row=9,column=0,pady=(10,0))
+
+
+
         def store():
             """This function will open store window to add items"""
             store = Tk()
@@ -282,7 +363,7 @@ def main_gui():
         user_name_label.grid(column =  0 ,row = 0,padx=5,pady=5)
 
         # Create Sales operations button
-        sales_button = Button(login, text = " Sales operations ",font=("Arial",16))
+        sales_button = Button(login, text = " Sales operations ",font=("Arial",16),command=sales)
         sales_button.grid(column = 1, row =1,pady=(60,10))
 
         # Create Store button
