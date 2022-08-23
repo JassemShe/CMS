@@ -34,13 +34,68 @@ def main_gui():
         login.title("Option menu")
         login.geometry("320x340")
 
-
-
         def sales():
             """This function will open sales window to apply sales operations"""
             sales = Tk()
             sales.title("Sales")
             sales.geometry("420x400")
+
+
+            #Totol price
+            global total_price
+            total_price = 0
+            def add_items():
+                """add chosen items to total_price"""
+                global total_price
+                item = float(item_drop.get())
+                quantiy = int(item_quantity_box.get())
+                price = item * quantiy
+                total_price = total_price + price
+                total_price_value_label["text"] = round(total_price,2)
+                item_quantity_box.delete(0,END)
+
+            def add_tea():
+                """add chosen items to total_price"""
+                global total_price
+                tea = float(tea_drop.get())
+                quantiy = int(tea_quantity_box.get())
+                price = tea * quantiy
+                total_price = total_price + price
+                total_price_value_label["text"] = round(total_price,2)
+                tea_quantity_box.delete(0,END)
+
+            def add_coffe():
+                """add chosen items to total_price"""
+                global total_price
+                coffe = float(coffe_drop.get())
+                quantiy = int(coffe_quantity_box.get())
+                price = coffe * quantiy
+                total_price = total_price + price
+                total_price_value_label["text"] = round(total_price,2)
+                coffe_quantity_box.delete(0,END)
+
+            def paid():
+               """Calcualte remenaning amount for customer"""
+               global total_price
+               paid = float(paid_box.get())
+               remaning = paid - total_price
+               remaining_value_label["text"] = round(remaning,2)
+               paid_box.delete(0,END)
+
+            def remove():
+               """Reset total price"""
+               global total_price
+               total_price = 0
+               total_price_value_label["text"] = "**"
+               remaining_value_label["text"] = "**"
+
+            def enter():
+               """enter sales as succesful to database (not finished)"""
+               global total_price
+
+               total_price = 0
+               total_price_value_label["text"] = "**"
+               remaining_value_label["text"] = "**"
 
             # Add items
             items_label = Label(sales,text = "Items",font=("Arial",12))
@@ -54,10 +109,8 @@ def main_gui():
             item_quantity_label.grid(row = 0 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
             item_quantity_box = Entry(sales,width = 10)
             item_quantity_box.grid(row = 1, column = 1 , pady = (0,0), padx =(10,5))
-            add_item_button = Button(sales,text = "Add",font=("Arial",10))
+            add_item_button = Button(sales,text = "Add",font=("Arial",10),command=add_items)
             add_item_button.grid(row = 1 , column = 2 , pady = (0,0), padx = (10 ,5))
-            remove_item_button = Button(sales,text = "Remove",font=("Arial",10))
-            remove_item_button.grid(row = 1 , column = 3 , pady = (0,0), padx = (10 ,5))
 
             # Add tea
             tea_cup_label = Label(sales,text = "Tea cup price",font=("Arial",12))
@@ -70,10 +123,8 @@ def main_gui():
             tea_quantity_label.grid(row = 2 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
             tea_quantity_box = Entry(sales,width = 10)
             tea_quantity_box.grid(row = 3, column = 1 , pady = (0,0), padx =(10,5))
-            add_tea_button = Button(sales,text = "Add",font=("Arial",10))
+            add_tea_button = Button(sales,text = "Add",font=("Arial",10),command=add_tea)
             add_tea_button.grid(row = 3 , column = 2 , pady = (0,0), padx = (10 ,5))
-            remove_tea_button = Button(sales,text = "Remove",font=("Arial",10))
-            remove_tea_button.grid(row = 3 , column = 3 , pady = (0,0), padx = (10 ,5))
 
             # Add coffe
             coffe_cup_label = Label(sales,text = "Coffe cup price",font=("Arial",12))
@@ -86,10 +137,8 @@ def main_gui():
             coffe_quantity_label.grid(row = 4 ,column = 1 ,pady = (15,0) ,padx=(10 , 5))
             coffe_quantity_box = Entry(sales,width = 10)
             coffe_quantity_box.grid(row = 5, column = 1 , pady = (0,0), padx =(10,5))
-            add_coffe_button = Button(sales,text = "Add",font=("Arial",10))
+            add_coffe_button = Button(sales,text = "Add",font=("Arial",10),command=add_coffe)
             add_coffe_button.grid(row = 5 , column = 2 , pady = (0,0), padx = (10 ,5))
-            remove_coffe_button = Button(sales,text = "Remove",font=("Arial",10))
-            remove_coffe_button.grid(row = 5 , column = 3 , pady = (0,0), padx = (10 ,5))
 
             # Total price
             total_price_text_label = Label(sales,text="Total Price: ",font=("Arial",14))
@@ -102,6 +151,8 @@ def main_gui():
             paid_label.grid(row=7,column=0)
             paid_box = Entry(sales,width = 10)
             paid_box.grid(row = 7 , column =1)
+            paid_button = Button(sales,text="Paid",font=("Arial",10),command=paid)
+            paid_button.grid(row=7,column=2)
 
             # Remaining
             remaining_text_label = Label(sales,text="Remaining: ",font=("Arial",14))
@@ -113,7 +164,9 @@ def main_gui():
             enter_button = Button(sales,text="Enter",font=("Arial",10),width = 15)
             enter_button.grid(row=9,column=0,pady=(10,0))
 
-
+            # Remove
+            remove_button = Button(sales,text="Remove",font=("Arial",10),width = 15,command=remove)
+            remove_button.grid(row = 9 , column =1 ,pady=(10,0))
 
         def store():
             """This function will open store window to add items"""
@@ -373,8 +426,6 @@ def main_gui():
         # Create log out button
         logout_button = Button(login, text = "Log out",font=("Arial",16),width=15,command=log_out)
         logout_button.grid(column = 1, row = 3)
-
-
 
     def login_valid():
         """This funtion is responible to check if username and password are correct and if correct
